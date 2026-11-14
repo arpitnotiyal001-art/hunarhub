@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 app.use('/api/profiles', require('./routes/profiles'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/products', require('./routes/products'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
