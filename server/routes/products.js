@@ -80,9 +80,10 @@ router.delete('/:id', protect, authorize('entrepreneur'), async (req, res) => {
 // Public: list products from approved entrepreneurs
 router.get('/', async (req, res) => {
   try {
-    const { q, minPrice, maxPrice, page = 1, limit = 12 } = req.query;
+    const { q, minPrice, maxPrice, profile, page = 1, limit = 12 } = req.query;
     const approvedIds = await Profile.find({ status: 'approved' }).distinct('_id');
-    const filter = { profile: { $in: approvedIds }, isActive: true };
+    const idList = profile ? approvedIds.filter((id) => String(id) === profile) : approvedIds;
+    const filter = { profile: { $in: idList }, isActive: true };
     if (q) filter.name = new RegExp(escapeRegex(q), 'i');
     if (minPrice || maxPrice) {
       filter.price = {};

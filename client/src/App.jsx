@@ -4,6 +4,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Browse from './pages/Browse';
+import ProfileDetail from './pages/ProfileDetail';
+import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
 import Placeholder from './pages/Placeholder';
 
 export default function App() {
@@ -15,8 +19,10 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/browse" element={<Placeholder title="Browse entrepreneurs" />} />
-          <Route path="/products" element={<Placeholder title="Products" />} />
+          <Route path="/browse" element={<Browse />} />
+          <Route path="/entrepreneurs/:id" element={<ProfileDetail />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route
             path="/my-orders"
             element={
