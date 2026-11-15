@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { api } from '../api';
 import ProductCard from '../components/ProductCard';
+import ServiceList from '../components/ServiceList';
 import StarRating from '../components/StarRating';
-import { formatDate, formatPrice } from '../format';
+import { formatDate } from '../format';
 
 export default function ProfileDetail() {
   const { id } = useParams();
@@ -69,24 +70,7 @@ export default function ProfileDetail() {
         )}
       </header>
 
-      <section className="mt-8">
-        <h2 className="text-xl font-semibold">Services</h2>
-        {profile.services.length === 0 ? (
-          <p className="mt-2 text-stone-500">No services listed yet.</p>
-        ) : (
-          <ul className="mt-3 divide-y divide-stone-200 rounded-xl border border-stone-200 bg-white">
-            {profile.services.map((s) => (
-              <li key={s._id} className="flex items-center justify-between gap-4 p-4">
-                <div>
-                  <p className="font-medium">{s.title}</p>
-                  {s.description && <p className="text-sm text-stone-500">{s.description}</p>}
-                </div>
-                <span className="shrink-0 font-semibold text-amber-700">{formatPrice(s.price)}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+      <ServiceList profile={profile} />
 
       <section className="mt-8">
         <h2 className="text-xl font-semibold">Products</h2>

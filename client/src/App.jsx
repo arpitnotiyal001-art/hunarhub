@@ -8,6 +8,7 @@ import Browse from './pages/Browse';
 import ProfileDetail from './pages/ProfileDetail';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
+import MyOrders from './pages/MyOrders';
 import Placeholder from './pages/Placeholder';
 
 export default function App() {
@@ -27,7 +28,7 @@ export default function App() {
             path="/my-orders"
             element={
               <ProtectedRoute roles={['customer']}>
-                <Placeholder title="My orders" />
+                <MyOrders />
               </ProtectedRoute>
             }
           />

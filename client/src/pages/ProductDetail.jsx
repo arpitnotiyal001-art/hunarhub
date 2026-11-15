@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { api } from '../api';
 import { formatPrice } from '../format';
+import OrderForm from '../components/OrderForm';
+
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -71,6 +73,7 @@ export default function ProductDetail() {
             {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
           </p>
           {product.description && <p className="mt-4 text-stone-700">{product.description}</p>}
+          <OrderForm product={product} />
 
           {product.profile && (
             <div className="mt-6 rounded-xl border border-stone-200 bg-white p-4">
