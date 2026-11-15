@@ -19,6 +19,8 @@ const profileSchema = new mongoose.Schema(
     ],
     available: { type: Boolean, default: true },
     status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+    ratingAverage: { type: Number, default: 0 },
+    ratingCount: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
