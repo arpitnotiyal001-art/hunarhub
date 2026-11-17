@@ -67,7 +67,7 @@ router.patch('/:id/status', protect, authorize('customer', 'entrepreneur'), asyn
     const updated = await ServiceRequest.findOneAndUpdate(
       { _id: request._id, status: request.status },
       { status },
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!updated) return res.status(409).json({ message: 'Request was just updated, please retry' });
     res.json(updated);

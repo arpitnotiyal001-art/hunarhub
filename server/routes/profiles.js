@@ -38,7 +38,7 @@ router.put('/me', protect, authorize('entrepreneur'), async (req, res) => {
     const profile = await Profile.findOneAndUpdate(
       { user: req.user._id },
       pick(req.body),
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
     if (!profile) return res.status(404).json({ message: 'No profile yet' });
     res.json(profile);

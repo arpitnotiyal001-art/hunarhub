@@ -22,7 +22,7 @@ router.patch('/profiles/:id/status', async (req, res) => {
       return res.status(400).json({ message: 'Invalid status' });
     }
     const profile = await Profile.findByIdAndUpdate(
-      req.params.id, { status }, { new: true }
+      req.params.id, { status }, { returnDocument: 'after' }
     );
     if (!profile) return res.status(404).json({ message: 'Profile not found' });
     res.json(profile);

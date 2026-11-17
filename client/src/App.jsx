@@ -9,7 +9,9 @@ import ProfileDetail from './pages/ProfileDetail';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import MyOrders from './pages/MyOrders';
+import Dashboard from './pages/Dashboard';
 import Placeholder from './pages/Placeholder';
+import Admin from './pages/Admin';
 
 export default function App() {
   return (
@@ -36,7 +38,7 @@ export default function App() {
             path="/dashboard"
             element={
               <ProtectedRoute roles={['entrepreneur']}>
-                <Placeholder title="Entrepreneur dashboard" />
+                <Dashboard />
               </ProtectedRoute>
             }
           />
@@ -44,7 +46,7 @@ export default function App() {
             path="/admin"
             element={
               <ProtectedRoute roles={['admin']}>
-                <Placeholder title="Admin dashboard" />
+                <Admin />
               </ProtectedRoute>
             }
           />

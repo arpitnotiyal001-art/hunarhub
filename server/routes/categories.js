@@ -24,15 +24,17 @@ router.put('/:id', protect, authorize('admin'), async (req, res) => {
     if (req.body.name !== undefined) update.name = req.body.name;
     if (req.body.isActive !== undefined) update.isActive = req.body.isActive;
     const category = await Category.findByIdAndUpdate(req.params.id, update, {
-      new: true,
+      returnDocument: 'after',
       runValidators: true,
     });
     if (!category) return res.status(404).json({ message: 'Category not found' });
     res.json(category);
-  } catch (err) {
+  }catch (err) {
+    if (err.code === 11000) return res.status(400).json({ message: 'Category already exists' });
     res.status(400).json({ message: err.message });
   }
-});
+  }
+);
 
 router.delete('/:id', protect, authorize('admin'), async (req, res) => {
   try {

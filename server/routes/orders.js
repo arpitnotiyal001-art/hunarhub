@@ -110,7 +110,7 @@ router.patch('/:id/status', protect, authorize('customer', 'entrepreneur'), asyn
     const updated = await Order.findOneAndUpdate(
       { _id: order._id, status: order.status },
       { status },
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!updated) return res.status(409).json({ message: 'Order was just updated, please retry' });
 
