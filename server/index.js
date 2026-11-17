@@ -4,7 +4,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  ...(process.env.CLIENT_URL || '').split(',').map((s) => s.trim()).filter(Boolean),
+];
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
