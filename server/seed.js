@@ -3,8 +3,23 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const Profile = require('./models/EntrepreneurProfile');
 const Product = require('./models/Product');
+const Category = require('./models/Category');
+
+const categories = ['Cobbler', 'Potter', 'Tailor', 'Artisan', 'Small vendor'];
+
+const accounts = [
+  { name: 'Admin', email: 'admin@hunarhub.com', password: 'Admin12345', role: 'admin' },
+  { name: 'Test Customer', email: 'test@example.com', password: '123456', role: 'customer' },
+];
 
 const people = [
+  {
+    name: 'Ramesh Potter', email: 'ramesh@example.com', business: 'Ramesh Pottery',
+    skill: 'Potter', city: 'Meerut', state: 'Uttar Pradesh', years: 15,
+    bio: 'Handmade clay pots',
+    services: [{ title: 'Custom clay pot', price: 250 }],
+    products: [{ name: 'Terracotta Water Pot', price: 450, stock: 5, description: 'Handmade clay pot, 10 litres' }],
+  },
   {
     name: 'Sunita Devi', email: 'sunita@example.com', business: 'Sunita Tailors',
     skill: 'Tailor', city: 'Agra', state: 'Uttar Pradesh', years: 12,
@@ -50,6 +65,21 @@ const people = [
 
 (async () => {
   await mongoose.connect(process.env.MONGO_URI);
+
+  for (const name of categories) {
+    await Category.updateOne({ name }, { $setOnInsert: { name } }, { upsert: true });
+  }
+  console.log(`Categories ready (${categories.length})`);
+
+  for (const a of accounts) {
+    if (await User.findOne({ email: a.email })) {
+      console.log(`Skipped ${a.email} (already exists)`);
+      continue;
+    }
+    await User.create(a);
+    console.log(`Created ${a.role} ${a.email}`);
+  }
+
   let created = 0;
   for (const p of people) {
     if (await User.findOne({ email: p.email })) {
@@ -68,6 +98,7 @@ const people = [
     created += 1;
     console.log(`Created ${p.business}`);
   }
+
   console.log(`Done. ${created} new entrepreneurs.`);
   await mongoose.disconnect();
 })().catch((err) => {
